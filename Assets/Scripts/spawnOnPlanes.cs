@@ -18,12 +18,19 @@ public class spawnOnPlanes : MonoBehaviour
 
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
+    public int[] colorLevel = new int[] { 50, 180, 255 };
+
+    //public Gradient gradient = new Gradient();
     ARRaycastManager m_raycastmanager;
 
     // Start is called before the first frame update
     void Awake()
     {
         m_raycastmanager = GetComponent<ARRaycastManager>();
+        
+
+
+
     }
 
     bool GetTouch(out Vector2 touch_pos)
@@ -68,7 +75,7 @@ public class spawnOnPlanes : MonoBehaviour
 
             if(spawnObject == null)
             {
-                spawnObject = Instantiate(PlacedPrefab, hitPose.position, hitPose.rotation);
+                spawnObject = Instantiate(PlacedPrefab, hitPose.position, Quaternion.Euler(Vector3.up));
 
 
 
@@ -87,15 +94,29 @@ public class spawnOnPlanes : MonoBehaviour
         if (spawnObject != null)
         {
             Color colorHolder = new Color(getRandomNum(), getRandomNum(), getRandomNum());
+
             var main = spawnObject.transform.GetChild(0).GetChild(1).GetComponent<ParticleSystem>().main;
             main.startColor = colorHolder;
-            Debug.Log("Fire Color: " + colorHolder.ToString());
 
 
             colorHolder = new Color(getRandomNum(), getRandomNum(), getRandomNum());
+
             var fireDarkPSMain = spawnObject.transform.GetChild(0).GetChild(3).GetComponent<ParticleSystem>().main;
             fireDarkPSMain.startColor = colorHolder;
-            Debug.Log("Fire Dark Color: " + colorHolder.ToString());
+
+            //var trailPSMain = spawnObject.GetComponent<particleSystemController>().getPS(1).trails;
+
+
+            //gradient.SetKeys(
+            //    new GradientColorKey[] { new GradientColorKey(colorHolder, 0.0f), new GradientColorKey(Color.white, 1.0f) },
+            //    new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) }
+            //);
+
+            //Debug.Log("gradient: " + trailPSMain.colorOverTrail.gradient.colorKeys);
+
+            //trailPSMain.colorOverTrail = gradient;
+
+            spawnObject.GetComponent<particleSystemController>().playAllOnce();
         }
 
     }
@@ -103,18 +124,9 @@ public class spawnOnPlanes : MonoBehaviour
     public int getRandomNum()
     {
 
-        return Random.Range(0, 250);
+        return colorLevel[Random.Range(0,3)];
     }
 
-    //public Color getRandomColor()
-    //{
-    //    List<Color> colors = new List<Color>();
-
-    //    colors[0] = 
 
 
-    //    return colorHolder;
-    //}
-
-   
 }

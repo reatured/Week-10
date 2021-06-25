@@ -451,7 +451,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Change Color
+  m_Text: Fire Color
 --- !u!222 &1314952178
 CanvasRenderer:
   m_ObjectHideFlags: 0
